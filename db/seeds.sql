@@ -1,21 +1,14 @@
-DROP DATABASE IF EXISTS employee_tracker_db;
-CREATE DATABASE employee_tracker_db;
-USE employee_tracker_db;
-CREATE TABLE department (
-  id INT AUTO_INCREMENT NOT NULL,
-  name VARCHAR(30) NOT NULL,
-  PRIMARY KEY(id)
-);
-CREATE TABLE role (
-  id INT AUTO_INCREMENT NOT NULL,
-  title VARCHAR (30) NOT NULL,
-  salary DECIMAL NOT NULL,
-  department INT NOT NULL
-);
-CREATE TABLE employee (
-  id INT AUTO_INCREMENT NOT NULL,
-  first_name VARCHAR(30) NOT NULL,
-  last_name VARCHAR(30) NOT NULL,
-  role_id INT NOT NULL,
-  manager_id INT
-);
+INSERT INTO
+  departments (name)
+VALUES
+  ("HR"),
+  ("Accounting"),("Sales"),
+  ("Engineering");
+INSERT INTO
+  roles (title, salary, department)
+VALUES
+  ("HR Manager", 75000, "HR");;
+INSERT INTO
+  employees (first_name, last_name, role_id, manager_id)
+VALUES
+  ("Lauren", "Plenger", 1, 15);
