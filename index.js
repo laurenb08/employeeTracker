@@ -17,7 +17,10 @@ function askForAction() {
             "VIEW_DEPARTMENTS",
             "VIEW_ROLES",
             "VIEW_EMPLOYEES",
+            "CREATE_DEPARTMENT",
             "CREATE_ROLE",
+            "CREATE_EMPLOYEE",
+            "UPDATE_EMPLOYEE_ROLE",
             "QUIT"
         ]
     }).then((res) => {
@@ -27,12 +30,26 @@ function askForAction() {
                 return;
 
             case "VIEW_ROLES":
+                viewRoles();
                 return;
 
             case "VIEW_EMPLOYEES":
+                viewEmployees();
+                return;
+
+            case "CREATE_DEPARTMENT":
+                createDepartment();
                 return;
 
             case "CREATE_ROLE":
+                createRole();
+                return;
+
+            case "CREATE_EMPLOYEE":
+                createEmployee();
+                return;
+
+            case "UPDATE_EMPLOYEE_ROLE":
                 createRole();
                 return;
 
@@ -45,6 +62,24 @@ function askForAction() {
 function viewDepartments() {
 
     db.getDepartments().then((results) => {
+        console.table(results);
+        askForAction();
+    });
+
+}
+
+function viewRoles() {
+
+    db.getRoles().then((results) => {
+        console.table(results);
+        askForAction();
+    });
+
+}
+
+function viewEmployees() {
+
+    db.getEmployees().then((results) => {
         console.table(results);
         askForAction();
     });
