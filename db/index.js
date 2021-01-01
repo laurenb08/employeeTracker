@@ -23,7 +23,15 @@ module.exports = {
 
     },
     updateEmployee(data) {
-        return connection.query("UPDATE employees SET ? WHERE ?", data);
+        return connection.query("UPDATE employees SET ? WHERE ?",
+            [
+                {
+                    id: data.employeeId
+                },
+                {
+                    role_id: data.roleId
+                }
+            ]);
 
     }
 

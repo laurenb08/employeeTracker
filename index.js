@@ -234,17 +234,17 @@ function updateEmployeeRoles() {
                         {
                             message: "Which employee would you like to change?",
                             type: "list",
-                            name: "id",
+                            name: "employeeId",
                             choices: employeeList
                         },
                         {
                             message: "What is this employees new role?",
                             type: "list",
-                            name: "role_id",
+                            name: "roleId",
                             choices: roleList
                         }
                     ]).then(updatedEmployee => {
-                        db.Employee(updatedEmployee).then((res) => {
+                        db.updateEmployee(updatedEmployee).then((res) => {
                             console.log("Employee Info Updated!")
                             askForAction();
                         })
