@@ -21,6 +21,10 @@ module.exports = {
     insertEmployee(data) {
         return connection.query("INSERT INTO employees SET ?", data);
 
+    },
+    updateEmployee(data) {
+        return connection.query("UPDATE employees SET ? WHERE ?", data);
+
     }
 
 }

@@ -161,6 +161,101 @@ function createRoles() {
     })
 }
 
+function createEmployees() {
+    db.getRoles()
+        .then((roles) => {
+            console.log(roles);
+
+            const roleList = roles.map((role) => ({
+                value: role.id,
+                name: role.title
+            }));
+            db.getEmployees()
+                .then((employees) => {
+                    console.log(employees);
+
+                    const employeeList = employees.map((employee) => ({
+                        value: employee.id,
+                        name: `${employee.first_name} ${employee.last_name}`
+                    }))
+                    inquirer.prompt([
+                        {
+                            message: "What is the employee's first name?",
+                            type: "input",
+                            name: "first_name",
+                        },
+                        {
+                            message: "What is the employee's last name?",
+                            type: "input",
+                            name: "last_name",
+                        },
+                        {
+                            message: "What is the role for this employee?",
+                            type: "list",
+                            name: "role_id",
+                            choices: roleList
+                        },
+                        {
+                            message: "Who will be this employees manager?",
+                            type: "list",
+                            name: "manager_id",
+                            choices: employeeList
+                        }
+                    ]).then(newEmployee => {
+                        db.insertEmployee(newEmployee).then((res) => {
+                            console.log("New Employee Added!")
+                            askForAction();
+                        })
+                    })
+                })
+        }
+        )
+}
+
+function updateEmployeeRoles() {
+    db.getEmployees()
+        .then((employees) => {
+            console.log(employees);
+
+            const employeeList = employees.map((employee) => ({
+                value: employee.id,
+                name: `${employee.first_name} ${employee.last_name}`
+            }));
+            db.getRoles()
+                .then((roles) => {
+                    console.log(roles);
+
+                    const roleList = roles.map((role) => ({
+                        value: role.id,
+                        name: role.title
+                    })
+                    );
+                    inquirer.prompt([
+                        {
+                            message: "Which employee would you like to change?",
+                            type: "list",
+                            name: "id",
+                            choices: employeeList
+                        },
+                        {
+                            message: "What is this employees new role?",
+                            type: "list",
+                            name: "role_id",
+                            choices: roleList
+                        }
+                    ]).then(updatedEmployee => {
+                        db.Employee(updatedEmployee).then((res) => {
+                            console.log("Employee Info Updated!")
+                            askForAction();
+                        })
+                    })
+
+                });
+
+        });
+
+}
+
 
 
 
@@ -171,4 +266,3 @@ askForAction();
 db.getDepartments().then((results) => {
     console.log(results);
 });
-
