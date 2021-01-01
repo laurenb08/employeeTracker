@@ -137,11 +137,12 @@ function createRoles() {
                 type: "input",
                 name: "salary",
             }
-        ]).then(res => {
-            db.insertRoles(res);
-            console.log(res);
-            askForAction();
-        });
+        ]).then(newRole => {
+            db.insertRoles(newRole).then((res) => {
+                console.log("New Role Added!")
+                askForAction();
+            })
+        })
     })
 }
 
