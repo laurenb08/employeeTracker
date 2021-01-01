@@ -110,6 +110,21 @@ function viewEmployees() {
 
 }
 
+function createDepartments() {
+    inquirer.prompt([
+        {
+            message: "What department would you like to create?",
+            type: "input",
+            name: "name",
+        }
+    ]).then(newDepartment => {
+        db.insertDepartments(newDepartment).then((res) => {
+            console.log("New Department Added!")
+            askForAction();
+        })
+    })
+}
+
 function createRoles() {
     db.getDepartments().then((departments) => {
 
