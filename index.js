@@ -56,19 +56,19 @@ function askForAction() {
                 return;
 
             case "CREATE_DEPARTMENT":
-                createDepartment();
+                createDepartments();
                 return;
 
             case "CREATE_ROLE":
-                createRole();
+                createRoles();
                 return;
 
             case "CREATE_EMPLOYEE":
-                createEmployee();
+                createEmployees();
                 return;
 
             case "UPDATE_EMPLOYEE_ROLE":
-                updateEmployeeRole();
+                updateEmployeeRoles();
                 return;
 
             default:
@@ -110,14 +110,14 @@ function viewEmployees() {
 
 }
 
-function createRole() {
+function createRoles() {
     db.getDepartments().then((departments) => {
 
         console.log(departments);
 
-        const departmentChoices = departments.map((departments) => ({
-            value: departments.id,
-            name: departments.name
+        const departmentChoices = departments.map((department) => ({
+            value: department.id,
+            name: department.name
         }))
 
         inquirer.prompt([
@@ -138,7 +138,7 @@ function createRole() {
                 name: "salary",
             }
         ]).then(res => {
-            db.insertRole(res);
+            db.insertRoles(res);
             console.log(res);
             askForAction();
         });

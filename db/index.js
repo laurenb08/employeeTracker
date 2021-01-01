@@ -10,7 +10,7 @@ module.exports = {
     getEmployees() {
         return connection.query("SELECT * FROM employees");
     },
-    insertRole(data) {
+    insertRoles(data) {
         return connection.query("INSERT INTO role SET ?", data);
 
     }
