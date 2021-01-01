@@ -1,10 +1,29 @@
 const { resourceLimits } = require("worker_threads");
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+const logo = require("asciiart-logo");
 const cTable = require("console.table");
 
 const db = require("./db");
 const connection = require("./db/connection");
+
+console.log(
+    logo({
+        name: 'Employee Database',
+        font: 'Big',
+        lineChars: 15,
+        padding: 2,
+        margin: 3,
+        borderColor: 'magenta',
+        logoColor: 'white',
+        textColor: 'magenta',
+    })
+        .emptyLine()
+        .right('version 1.0')
+        .emptyLine()
+        .center('Create, track and update departments, roles and employees!')
+        .render()
+);
 
 function askForAction() {
 
@@ -71,19 +90,23 @@ function viewDepartments() {
 
 function viewRoles() {
 
-    db.getRoles().then((results) => {
-        console.table(results);
-        askForAction();
-    });
+    db.getRoles()
+        .then((results) => {
+            let rolesTable = cTable.getTable(results);
+            console.table(rolesTable);
+            askForAction();
+        });
 
 }
 
 function viewEmployees() {
 
-    db.getEmployees().then((results) => {
-        console.table(results);
-        askForAction();
-    });
+    db.getEmployees()
+        .then((results) => {
+            let employeesTable = cTable.getTable(results);
+            console.table(employeesTable);
+            askForAction();
+        });
 
 }
 
@@ -103,9 +126,21 @@ function createRole() {
                 type: "list",
                 name: "department_id",
                 choices: departmentChoices
+            },
+            {
+                message: "What is the title of this role?",
+                type: "input",
+                name: "title",
+            },
+            {
+                message: "What is the salary for this role?",
+                type: "input",
+                name: "salary",
             }
         ]).then(res => {
+            db.insertRole(res);
             console.log(res);
+            askForAction();
         });
     })
 }
