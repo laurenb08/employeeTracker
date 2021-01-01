@@ -1,8 +1,7 @@
 const { resourceLimits } = require("worker_threads");
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-// const inquirer = require("inquirer"); ****console table dependencies****
-
+const cTable = require("console.table");
 
 const db = require("./db");
 const connection = require("./db/connection");
@@ -50,7 +49,7 @@ function askForAction() {
                 return;
 
             case "UPDATE_EMPLOYEE_ROLE":
-                createRole();
+                updateEmployeeRole();
                 return;
 
             default:
@@ -61,10 +60,12 @@ function askForAction() {
 
 function viewDepartments() {
 
-    db.getDepartments().then((results) => {
-        console.table(results);
-        askForAction();
-    });
+    db.getDepartments()
+        .then((results) => {
+            let departmentsTable = cTable.getTable(results);
+            console.table(departmentsTable);
+            askForAction();
+        });
 
 }
 
